@@ -69,4 +69,18 @@ class TweetSetSuite extends FunSuite {
       assert(trends.head.user == "a" || trends.head.user == "b")
     }
   }
+  
+  test("from forum descending: set5") {
+    new TestSets {
+      val trends = set5.descendingByRetweet
+      assert(!trends.isEmpty)
+	  def assertList(x: TweetList, prev:Int):Unit =
+	  	if(!x.isEmpty) {
+		  assert(x.head.retweets <= prev)
+		  assertList(x.tail, x.head.retweets)
+		} 
+	  assertList(trends, Int.MaxValue)
+    }
+  }
+  
 }
